@@ -176,11 +176,4 @@ public class WebsiteController {
     User getOneUserByName(@RequestParam String name) {
         return userRepo.findByName(name);
     }
-
-    @GetMapping(path = "/addUser")
-    public ModelAndView showPage() {
-        return new ModelAndView("signupForm");
-    }
-
-
 }
