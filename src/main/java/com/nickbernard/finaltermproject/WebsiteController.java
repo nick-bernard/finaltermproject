@@ -16,10 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Controller
 public class WebsiteController {
@@ -35,18 +37,22 @@ public class WebsiteController {
     private UserRepo userRepo;
 
 
-
-
     @GetMapping("/")
-    public String renderHomePage(){
+    public String renderHomePage() {
         return "index";
     }
 
 
     @GetMapping("/artworks")
-    public ModelAndView renderArtworksPage(){
+    public ModelAndView renderArtworksPage() {
 
         return new ModelAndView("artworks");
+    }
+
+    @GetMapping("/register")
+    public ModelAndView renderRegistrationPage() {
+
+        return new ModelAndView("register");
     }
 
 
@@ -55,7 +61,7 @@ public class WebsiteController {
     ///////////
 
     @GetMapping("/login")
-    public ModelAndView renderLoginPage(@RequestParam(name="name", required=false, defaultValue="world") String name){
+    public ModelAndView renderLoginPage(@RequestParam(name = "name", required = false, defaultValue = "world") String name) {
 
         System.out.println("In login() controller");
         ModelAndView returnPage = new ModelAndView();
@@ -68,10 +74,9 @@ public class WebsiteController {
     // Takes and saves info from the form
     @PostMapping("/saveInfo")
     public String login(
-            @RequestParam(name="fname", required=true) String fname,
-            @RequestParam(name="lname", required=true) String lname,
-            Model view)
-    {
+            @RequestParam(name = "fname", required = true) String fname,
+            @RequestParam(name = "lname", required = true) String lname,
+            Model view) {
         System.out.println(fname + " " + lname);
 
         ////////////////////////
@@ -91,8 +96,7 @@ public class WebsiteController {
                                         @RequestParam(name = "Username") String username,
                                         @RequestParam(name = "Password") String password,
                                         @RequestParam(name = "Bio") String bio
-    )
-    {
+    ) {
         ModelAndView returnPage = new ModelAndView();
         System.out.println("description      " + name);
         System.out.println(image.getOriginalFilename());
@@ -120,8 +124,10 @@ public class WebsiteController {
             User user = new User();
             user.setName(name);
             user.setUsername(username);
-
-
+            user.setPassword(password);
+            user.setBio(bio);
+            user.setImageUrl(imgSrc);
+            userRepo.save(user);
             //Save this in the DB.
 
         } catch (IOException e) {
@@ -133,6 +139,30 @@ public class WebsiteController {
         return returnPage;
     }
 
+    @GetMapping(path = "/all")
+    public @ResponseBody
+    Iterable<User> getAllUsers() {
+        // This returns a JSON or XML with the users
+        return userRepo.findAll();
+    }
+
+    @GetMapping(path = "/user")
+    public @ResponseBody
+    Optional<User> getOneUser(@RequestParam Integer id) {
+        // This returns a JSON or XML with the users
+        return userRepo.findById(id);
+    }
+
+    @GetMapping(path = "/userByName")
+    public @ResponseBody
+    User getOneUserByName(@RequestParam String name) {
+        return userRepo.findByName(name);
+    }
+
+    @GetMapping(path = "/addUser")
+    public ModelAndView showPage() {
+        return new ModelAndView("signupForm");
+    }
 
 
 }
