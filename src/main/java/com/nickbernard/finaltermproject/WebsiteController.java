@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.IOException;
 import java.util.Optional;
 
+
 @Controller
 public class WebsiteController {
 
@@ -55,6 +56,11 @@ public class WebsiteController {
         return new ModelAndView("register");
     }
 
+    @GetMapping("/profile")
+    public ModelAndView renderProfilePage() {
+
+        return new ModelAndView("profile");
+    }
 
     ///////////
     // LOGIN //
@@ -138,6 +144,18 @@ public class WebsiteController {
 
         return returnPage;
     }
+
+    /*
+    @GetMapping("/profile")
+    public String renderProfile(){
+
+        // Fetch the image from database
+        // add object to the view
+
+        // return the view
+    }
+    */
+
 
     @GetMapping(path = "/all")
     public @ResponseBody
