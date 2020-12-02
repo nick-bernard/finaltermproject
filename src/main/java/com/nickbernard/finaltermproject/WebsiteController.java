@@ -9,6 +9,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -20,8 +21,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.net.URL;
+import java.net.URLConnection;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import java.io.IOException;
 import java.util.Optional;
+
+import org.json.JSONObject;
+import org.json.JSONArray;
 
 
 @Controller
@@ -39,8 +51,9 @@ public class WebsiteController {
 
 
     @GetMapping("/")
-    public String renderHomePage() {
-        return "index";
+    public ModelAndView renderHomePage() {
+
+        return new ModelAndView("index");
     }
 
 
@@ -175,5 +188,69 @@ public class WebsiteController {
     public @ResponseBody
     User getOneUserByName(@RequestParam String name) {
         return userRepo.findByName(name);
+    }
+
+
+
+    public ModelAndView getPageWithWeatherInfo()
+    {
+        ModelAndView returnPage = new ModelAndView();
+
+        String API_KEY = "4fa8fc5c7d7981b995adddbf79e5b964";
+
+        // City of Albany (NY) city code: 5106834
+        // It will always be albany (to keep it simple)
+        String weatherDataURLString = "http://api.openweathermap.org/data/2.5/weather?id=5106834&appid=" + API_KEY;
+
+        StringBuilder weatherDataStringBuilder = new StringBuilder();
+
+        String tempString = "";
+
+        try {
+            URL url = new URL(weatherDataURLString);
+            URLConnection weatherDataConn = url.openConnection();
+            BufferedReader weatherDataRead = new BufferedReader(new InputStreamReader(weatherDataConn.getInputStream()));
+
+            String weatherDataJson = "";
+            String weatherDataLine = "";
+
+            while ((weatherDataLine = weatherDataRead.readLine()) != null) {
+                weatherDataStringBuilder.append(weatherDataLine);
+                weatherDataJson += weatherDataLine;
+            }
+
+            JSONObject JSONObject_weatherDataAPIResponse = new JSONObject(weatherDataJson);
+
+
+            double lon = JSONObject_weatherDataAPIResponse.getDouble("lon");
+            double lat = JSONObject_weatherDataAPIResponse.getDouble("lat");
+            String timezone = JSONObject_weatherDataAPIResponse.getString("timezone");
+            System.out.println("timezone: " + timezone);
+            int timezone_offset = JSONObject_weatherDataAPIResponse.getInt("timezone_offset");
+            System.out.println("timezone_offset: " + timezone_offset);
+
+
+            JSONArray JSONArray_weather = JSONObject_weatherDataAPIResponse.getJSONArray("weather");
+            JSONObject JSONObject_weather = JSONArray_weather.getJSONObject(0);
+            String weather_description = JSONObject_weather.getString("description");
+            String weather_icon = JSONObject_weather.getString("icon");
+
+            JSONObject JSONObject_main = JSONObject_weatherDataAPIResponse.getJSONObject("main");
+            double temp = JSONObject_main.getDouble("temp");
+
+            JSONObject JSONObject_wind = JSONObject_weatherDataAPIResponse.getJSONObject("wind");
+            double wind_speed = JSONObject_wind.getDouble("speed");
+
+
+
+
+
+        } catch(IOException | JSONException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+
+        return returnPage;
     }
 }
