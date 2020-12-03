@@ -140,6 +140,11 @@ public class WebsiteController {
 
             modelAndView.setViewName("confirmed");
             // Get the rest of the stuff from the database to display on the page
+            modelAndView.addObject("name", user.getName());
+            modelAndView.addObject("username", user.getUsername());
+            modelAndView.addObject("imageUrl", user.getImageUrl());
+            modelAndView.addObject("bio", user.getBio());
+            modelAndView.addObject("id", user.getId());
 
         }
 
