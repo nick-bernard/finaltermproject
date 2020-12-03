@@ -58,13 +58,51 @@
         <section class="clean-block clean-hero" style="color: rgba(169,9,255,0.70);background: url(&quot;/img/success.jpg&quot;) no-repeat;background-size: 100% 100%;">
             <div class="text">
                 <h2>New user was successfully registered!</h2>
-                <p>Your profile information is now contained within the MySQL database.</p><button class="btn btn-outline-light btn-lg" onclick="location.href='/'" type="button" >Back</button></div>
+                <p>Your profile information is now contained within the MySQL database.</p><button class="btn btn-outline-light btn-lg" onclick="location.href='/'" type="button" >Back</button>
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col text">
+                        <p style="color: rgb(255,255,255);">Image:</p>
+                    </div>
+                    <div class="col text">
+                        <p style="color: rgb(255,255,255);">pic</p><img th:src="${imgSrc}" style="width: 100px;height: 100px;" /></div>
+                </div>
+                <div class="row">
+                    <div class="col text">
+                        <p style="color: rgb(255,255,255);">Image URL:</p>
+                    </div>
+                    <div class="col text">
+                        <p style="color: rgb(255,255,255);">www.pic.com</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text">
+                        <p style="color: rgb(255,255,255);">Full Name:</p>
+                    </div>
+                    <div class="col text">
+                        <p style="color: rgb(255,255,255);">John Smith</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text">
+                        <p style="color: rgb(255,255,255);">Username:</p>
+                    </div>
+                    <div class="col text">
+                        <p style="color: rgb(255,255,255);">jsmithredsox</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text">
+                        <p style="color: rgb(255,255,255);">Biography:</p>
+                    </div>
+                    <div class="col text">
+                        <p style="color: rgb(255,255,255);">thu a o o uteh tuhe th oethutaoehuoeth uthuthutu tehuthetuhetuhet  ehhe o o o o uhethue toh ute uteo tuoe tuoeu oe utoe utoeuttoe  ehto hte</p>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
-    <div>
-        <p>New user information submitted to database: </p>
-        <img th:src="${imgSrc}" alt="User Photo">
-    </div>
 
 </body>
 </html>
