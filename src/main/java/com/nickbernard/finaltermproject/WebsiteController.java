@@ -57,11 +57,19 @@ public class WebsiteController {
     }
 
 
+    @GetMapping("/about")
+    public ModelAndView renderAboutPage() {
+
+        return new ModelAndView("about");
+    }
+
+
     @GetMapping("/artworks")
     public ModelAndView renderArtworksPage() {
 
         return new ModelAndView("artworks");
     }
+
 
     @GetMapping("/register")
     public ModelAndView renderRegistrationPage() {
