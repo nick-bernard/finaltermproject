@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/fonts/typicons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
     <link rel="stylesheet" href="/css/smoothproducts.css">
+    <link rel="stylesheet" href="/css/stiles.css">
 </head>
 
 <body>
@@ -90,7 +91,7 @@
                                 </div>
 
 
-                                <div id="changePicRow" class="row">
+                                <div id="changePicRow" class="row pic-row" style="display: none;">
                                     <div class="col">
                                         <form action="/updatePic"  method="post" enctype="multipart/form-data">
                                             <input type="file" name="photo" /><br><br>
@@ -100,7 +101,7 @@
                                     </div>
                                 </div>
 
-                                <div id="changeNameRow" class="row">
+                                <div id="changeNameRow" class="row name-row" style="display: none;">
                                     <div class="col">
                                         <form action="/updateName"  method="post" enctype="multipart/form-data">
                                             <input type="text" name="name" /><br><br>
@@ -110,7 +111,7 @@
                                     </div>
                                 </div>
 
-                                <div id="changeBioRow" class="row">
+                                <div id="changeBioRow" class="row bio-row" style="display: none;">
                                     <div class="col">
                                         <form action="/updateBio" method="post" enctype="multipart/form-data">
                                             <textarea rows="4" cols="50" name="bio"></textarea><br><br>
