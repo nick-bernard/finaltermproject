@@ -138,14 +138,16 @@ public class WebsiteController {
         // Test to see if that user exists in the database
         if ((user.getUsername().equals(username)) && (user.getPassword().equals(password))){
 
-            modelAndView.setViewName("confirmed");
+            modelAndView.setViewName("profile");
             // Get the rest of the stuff from the database to display on the page
             modelAndView.addObject("name", user.getName());
             modelAndView.addObject("username", user.getUsername());
             modelAndView.addObject("imageUrl", user.getImageUrl());
             modelAndView.addObject("bio", user.getBio());
             modelAndView.addObject("id", user.getId());
-
+        }
+        else{
+            modelAndView.setViewName("invalidLogin");
         }
 
 

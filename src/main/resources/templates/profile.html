@@ -16,7 +16,7 @@
 
 <body>
 <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-    <div class="container"><a class="navbar-brand logo" href="/">Nick Bernard's Page</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+    <div class="container"><a class="navbar-brand logo" href="/">Nick's Page</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse"
              id="navcol-1">
             <ul class="nav navbar-nav ml-auto">
@@ -54,10 +54,11 @@
                         <img th:src="${icon}" style="width: 60px;height: 60px;" />
                     </a>
                 </li>
+                <li class="nav-item"><a class="nav-link" href="about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                 <li class="nav-item"><a class="nav-link active" href="login">Log In</a></li>
-                <li class="nav-item"><a class="nav-link" href="register">Register Account</a></li>
-                <li class="nav-item"><a class="nav-link" href="artworks">Artworks</a></li>
+                <li class="nav-item"><a class="nav-link" href="register">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="artworks">Art</a></li>
             </ul>
         </div>
     </div>
@@ -67,15 +68,16 @@
     <section class="clean-block clean-form dark">
         <div class="container">
             <div class="block-heading">
-                <h2 class="text-info">User Profile</h2>
-                <p>If you've already created an account on the website, you can log in here!</p>
+                <p class="text-info">User Profile</p>
             </div>
 
             <div>
-                <div class="container"><img class="img-fluid d-block mx-auto mb-5" src="profile.png" />
-                    <h1>John Doe</h1>
+                <div class="container">
+                    <img class="img-fluid d-block mx-auto mb-5" th:src="${imageUrl}" style="width: 250px;height: 250px;" />
+                    <h2 th:text="'Username : ' + ${username}"></h2>
+                    <h3 th:text="'Full name: ' + ${name}"></h3>
                     <hr class="star-light" />
-                    <h2 class="font-weight-light mb-0">Web Developer - Graphic Artist - User Experience Designer</h2>
+                    <p class="font-weight-light mb-0" th:text="'Biography: ' + ${bio}"></p>
                 </div>
             </div>
 
