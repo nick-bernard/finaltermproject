@@ -56,8 +56,8 @@
                 </li>
                 <li class="nav-item"><a class="nav-link" href="about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link active" href="login">Log In</a></li>
-                <li class="nav-item"><a class="nav-link" href="register">Register</a></li>
+                <li class="nav-item"><a class="nav-link active">Profile</a></li>
+                <li class="nav-item"><a class="nav-link" href="/">Log Out</a></li>
                 <li class="nav-item"><a class="nav-link" href="artworks">Art</a></li>
             </ul>
         </div>
@@ -73,7 +73,21 @@
 
             <div>
                 <div class="container">
-                    <img class="img-fluid d-block mx-auto mb-5" th:src="${imageUrl}" style="width: 250px;height: 250px;" />
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <img class="img-fluid d-block mx-auto mb-5" th:src="${imageUrl}" style="width: 250px;height: 250px;" />
+                            </div>
+                            <div class="col">
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-primary" type="button">Edit Pic</button>
+                                    <button class="btn btn-primary" type="button">Edit Name</button>
+                                    <button class="btn btn-primary" type="button">Edit Bio</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <h2 th:text="'Username : ' + ${username}"></h2>
                     <h3 th:text="'Full name: ' + ${name}"></h3>
                     <hr class="star-light" />
