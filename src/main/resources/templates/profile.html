@@ -79,11 +79,47 @@
                                 <img class="img-fluid d-block mx-auto mb-5" th:src="${imageUrl}" style="width: 250px;height: 250px;" />
                             </div>
                             <div class="col">
-                                <div class="btn-group" role="group">
-                                    <button class="btn btn-primary" type="button">Edit Pic</button>
-                                    <button class="btn btn-primary" type="button">Edit Name</button>
-                                    <button class="btn btn-primary" type="button">Edit Bio</button>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="btn-group" role="group">
+                                            <button onclick="clickPicButton()" class="btn btn-primary" type="button">Edit Pic</button>
+                                            <button onclick="clickNameButton()" class="btn btn-primary" type="button">Edit Name</button>
+                                            <button onclick="clickBioButton()" class="btn btn-primary" type="button">Edit Bio</button>
+                                        </div>
+                                    </div>
                                 </div>
+
+
+                                <div id="changePicRow" class="row">
+                                    <div class="col">
+                                        <form action="/updatePic"  method="post" enctype="multipart/form-data">
+                                            <input type="file" name="photo" /><br><br>
+                                            <input type="hidden" name="username" th:value="${username}" />
+                                            <input type="submit" />
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div id="changeNameRow" class="row">
+                                    <div class="col">
+                                        <form action="/updateName"  method="post" enctype="multipart/form-data">
+                                            <input type="text" name="name" /><br><br>
+                                            <input type="hidden" name="username" th:value="${username}" />
+                                            <input type="submit" />
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div id="changeBioRow" class="row">
+                                    <div class="col">
+                                        <form action="/updateBio" method="post" enctype="multipart/form-data">
+                                            <textarea rows="4" cols="50" name="bio"></textarea><br><br>
+                                            <input type="hidden" name="username" th:value="${username}"/>
+                                            <input type="submit" />
+                                        </form>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -110,6 +146,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
 <script src="/js/smoothproducts.min.js"></script>
 <script src="/js/theme.js"></script>
+<script src="/js/popupform.js"></script>
 </body>
 
 </html>
