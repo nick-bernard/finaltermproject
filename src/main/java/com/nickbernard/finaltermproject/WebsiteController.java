@@ -53,34 +53,54 @@ public class WebsiteController {
     @GetMapping("/")
     public ModelAndView renderHomePage() {
 
-        return new ModelAndView("index");
+        ModelAndView modelAndView = getPageWithWeatherInfo();
+
+        modelAndView.setViewName("index");
+
+        return modelAndView;
     }
 
 
     @GetMapping("/about")
     public ModelAndView renderAboutPage() {
 
-        return new ModelAndView("about");
+        ModelAndView modelAndView = getPageWithWeatherInfo();
+
+        modelAndView.setViewName("about");
+
+        return modelAndView;
     }
 
 
     @GetMapping("/artworks")
     public ModelAndView renderArtworksPage() {
 
-        return new ModelAndView("artworks");
+        ModelAndView modelAndView = getPageWithWeatherInfo();
+
+        modelAndView.setViewName("artworks");
+
+        return modelAndView;
     }
 
 
     @GetMapping("/register")
     public ModelAndView renderRegistrationPage() {
 
-        return new ModelAndView("register");
+        ModelAndView modelAndView = getPageWithWeatherInfo();
+
+        modelAndView.setViewName("register");
+
+        return modelAndView;
     }
 
     @GetMapping("/profile")
     public ModelAndView renderProfilePage() {
 
-        return new ModelAndView("profile");
+        ModelAndView modelAndView = getPageWithWeatherInfo();
+
+        modelAndView.setViewName("profile");
+
+        return modelAndView;
     }
 
     ///////////
@@ -91,7 +111,9 @@ public class WebsiteController {
     public ModelAndView renderLoginPage(@RequestParam(name = "name", required = false, defaultValue = "world") String name) {
 
         System.out.println("In login() controller");
-        ModelAndView returnPage = new ModelAndView();
+        ModelAndView returnPage = getPageWithWeatherInfo();
+        returnPage.setViewName("login");
+
         String s = new String("Login " + name);
         returnPage.addObject("loginText", s);
 
@@ -124,7 +146,7 @@ public class WebsiteController {
                                         @RequestParam(name = "Password") String password,
                                         @RequestParam(name = "Bio") String bio
     ) {
-        ModelAndView returnPage = new ModelAndView();
+        ModelAndView returnPage = getPageWithWeatherInfo();
         System.out.println("description      " + name);
         System.out.println(image.getOriginalFilename());
 
@@ -208,7 +230,7 @@ public class WebsiteController {
 
         // City of Albany (NY) city code: 5106834
         // It will always be albany (to keep it simple)
-        String weatherDataURLString = "http://api.openweathermap.org/data/2.5/weather?id=5106834&appid=" + API_KEY;
+        String weatherDataURLString = "http://api.openweathermap.org/data/2.5/weather?id=5106834&appid=" + API_KEY + "&units=imperial";
 
         StringBuilder weatherDataStringBuilder = new StringBuilder();
 
@@ -229,33 +251,45 @@ public class WebsiteController {
 
             JSONObject JSONObject_weatherDataAPIResponse = new JSONObject(weatherDataJson);
 
-
+            /*
             double lon = JSONObject_weatherDataAPIResponse.getDouble("lon");
             double lat = JSONObject_weatherDataAPIResponse.getDouble("lat");
             String timezone = JSONObject_weatherDataAPIResponse.getString("timezone");
             System.out.println("timezone: " + timezone);
             int timezone_offset = JSONObject_weatherDataAPIResponse.getInt("timezone_offset");
             System.out.println("timezone_offset: " + timezone_offset);
-
+            */
 
             JSONArray JSONArray_weather = JSONObject_weatherDataAPIResponse.getJSONArray("weather");
             JSONObject JSONObject_weather = JSONArray_weather.getJSONObject(0);
             String weather_description = JSONObject_weather.getString("description");
             String weather_icon = JSONObject_weather.getString("icon");
+            String weather_icon_path = "/img/weathericons/" + weather_icon + ".png";
 
             JSONObject JSONObject_main = JSONObject_weatherDataAPIResponse.getJSONObject("main");
             double temp = JSONObject_main.getDouble("temp");
+            int intTemp = (int)temp;
 
             JSONObject JSONObject_wind = JSONObject_weatherDataAPIResponse.getJSONObject("wind");
             double wind_speed = JSONObject_wind.getDouble("speed");
+            int intWind_speed = (int)wind_speed;
 
 
 
+
+
+
+            returnPage.addObject("temp", intTemp);
+            returnPage.addObject("description", weather_description);
+            returnPage.addObject("icon", weather_icon_path);
+            returnPage.addObject("wind", intWind_speed);
 
 
         } catch(IOException | JSONException e) {
             System.out.println(e.getMessage());
         }
+
+
 
 
 

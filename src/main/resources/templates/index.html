@@ -26,22 +26,22 @@
                                 <div class="col" style="font-size: 16px;height: 65px;">
                                     <div class="row" style="height: 16px;">
                                         <div class="col">
-                                            <p style="font-size: 12px;">Quick weather facts!</p>
+                                            <p style="font-size: 12px;">Quick weather facts! (Albany NY)</p>
                                         </div>
                                     </div>
                                     <div class="row" style="height: 16px;">
                                         <div class="col">
-                                            <p style="font-size: 11px;">Temperature: 48F</p>
+                                            <p style="font-size: 11px;" th:text="'Temperature:  ' + ${temp} + '°F'"></p>
                                         </div>
                                     </div>
                                     <div class="row" style="height: 16px;">
                                         <div class="col">
-                                            <p style="font-size: 11px;"> Rain Chance: 30%</p>
+                                            <p style="font-size: 11px;" th:text="'Wind speed:  ' + ${wind} + ' mph'"></p>
                                         </div>
                                     </div>
                                     <div class="row" style="height: 16px;">
                                         <div class="col">
-                                            <p style="font-size: 11px;">    Cloudiness: 10%</p>
+                                            <p style="font-size: 11px;" th:text="'Description:  ' + ${description}"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -51,14 +51,14 @@
                     </li>
                     <li class="nav-item">
                         <a href="https://rapidapi.com/community/api/open-weather-map">
-                            <img src="/img/weathericons/03d.png" style="width: 60px;height: 60px;" />
+                            <img th:src="${icon}" style="width: 60px;height: 60px;" />
                         </a>
                     </li>
                     <li class="nav-item"><a class="nav-link active" href="about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="login">Log In</a></li>
-                    <li class="nav-item"><a class="nav-link" href="register">Register Account</a></li>
-                    <li class="nav-item"><a class="nav-link" href="artworks">Artworks</a></li>
+                    <li class="nav-item"><a class="nav-link" href="register">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="artworks">Art</a></li>
                 </ul>
             </div>
         </div>
