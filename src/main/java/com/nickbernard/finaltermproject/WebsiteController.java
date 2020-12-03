@@ -35,6 +35,8 @@ import java.util.Optional;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
+import javax.persistence.Basic;
+
 
 @Controller
 public class WebsiteController {
@@ -250,31 +252,102 @@ public class WebsiteController {
     @PostMapping(path = "/changeName")
     public ModelAndView changeName(@RequestParam("username") String username, @RequestParam("newName") String newName){
 
-        ModelAndView modelAndView = getPageWithWeatherInfo();
+        ModelAndView updatedNameProfile = getPageWithWeatherInfo();
 
         try{
             User updatedUser = userRepo.findByUsername(username);
             updatedUser.setName(newName);
             userRepo.save(updatedUser);
-            modelAndView.setViewName("profile");
+            updatedNameProfile.setViewName("profile");
             // Get the rest of the stuff from the database to display on the page
-            modelAndView.addObject("name", updatedUser.getName());
-            modelAndView.addObject("username", updatedUser.getUsername());
-            modelAndView.addObject("imageUrl", updatedUser.getImageUrl());
-            modelAndView.addObject("bio", updatedUser.getBio());
-            modelAndView.addObject("id", updatedUser.getId());
+            updatedNameProfile.addObject("name", updatedUser.getName());
+            updatedNameProfile.addObject("username", updatedUser.getUsername());
+            updatedNameProfile.addObject("imageUrl", updatedUser.getImageUrl());
+            updatedNameProfile.addObject("bio", updatedUser.getBio());
+            updatedNameProfile.addObject("id", updatedUser.getId());
 
 
         } catch(Exception error){
 
             error.printStackTrace();
-            modelAndView.setViewName("showError");
+            updatedNameProfile.setViewName("showError");
         }
 
-        return modelAndView;
+        return updatedNameProfile;
 
     }
 
+
+
+    @PostMapping(path = "/changeBio")
+    public ModelAndView changeBio(@RequestParam("username") String username, @RequestParam("newBio") String newBio){
+
+        ModelAndView updatedBioProfile = getPageWithWeatherInfo();
+
+        try{
+            User updatedUser = userRepo.findByUsername(username);
+            updatedUser.setBio(newBio);
+            userRepo.save(updatedUser);
+            updatedBioProfile.setViewName("profile");
+            // Get the rest of the stuff from the database to display on the page
+            updatedBioProfile.addObject("name", updatedUser.getName());
+            updatedBioProfile.addObject("username", updatedUser.getUsername());
+            updatedBioProfile.addObject("imageUrl", updatedUser.getImageUrl());
+            updatedBioProfile.addObject("bio", updatedUser.getBio());
+            updatedBioProfile.addObject("id", updatedUser.getId());
+
+        } catch(Exception error){
+
+            error.printStackTrace();
+            updatedBioProfile.setViewName("showError");
+        }
+
+        return updatedBioProfile;
+
+    }
+
+
+
+    @PostMapping(path = "/changePic")
+    public ModelAndView changePic(@RequestParam("username") String username, @RequestParam("newPhoto") MultipartFile newPhoto){
+
+        ModelAndView updatedPicProfile = getPageWithWeatherInfo();
+
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials(accesskey, secretkey);
+
+        AmazonS3 client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(awsCreds)).withRegion(Regions.US_EAST_1).build();
+
+        try {
+            PutObjectRequest req = new PutObjectRequest(bucketName, newPhoto.getOriginalFilename(), newPhoto.getInputStream(), new ObjectMetadata()).withCannedAcl(CannedAccessControlList.PublicRead);
+            client.putObject(req);
+
+        } catch(IOException error) {
+            error.printStackTrace();
+        }
+
+        String newPath = "http://" + bucketName + ".s3.amazonaws.com/" + newPhoto.getOriginalFilename();
+
+        try{
+            User updatedUser = userRepo.findByUsername(username);
+            updatedUser.setImageUrl(newPath);
+            userRepo.save(updatedUser);
+            updatedPicProfile.setViewName("profile");
+            // Get the rest of the stuff from the database to display on the page
+            updatedPicProfile.addObject("name", updatedUser.getName());
+            updatedPicProfile.addObject("username", updatedUser.getUsername());
+            updatedPicProfile.addObject("imageUrl", updatedUser.getImageUrl());
+            updatedPicProfile.addObject("bio", updatedUser.getBio());
+            updatedPicProfile.addObject("id", updatedUser.getId());
+
+        } catch(Exception error){
+
+            error.printStackTrace();
+            updatedPicProfile.setViewName("showError");
+        }
+
+        return updatedPicProfile;
+
+    }
 
 
 
