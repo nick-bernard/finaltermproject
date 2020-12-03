@@ -96,6 +96,11 @@ public class WebsiteController {
     @GetMapping("/profile")
     public ModelAndView renderProfilePage() {
 
+        // Fetch the image from database
+        // add object to the view
+
+        // return the view
+
         ModelAndView modelAndView = getPageWithWeatherInfo();
 
         modelAndView.setViewName("profile");
@@ -119,6 +124,29 @@ public class WebsiteController {
 
         return returnPage;
     }
+
+
+
+    @PostMapping(path="/loginUserValidation")
+    public ModelAndView loginUserValidation(@RequestParam("username") String username, @RequestParam("password") String password){
+
+        ModelAndView modelAndView = getPageWithWeatherInfo();
+        //modelAndView.setViewName("validating");
+
+        User user = userRepo.findByUsername(username);
+
+        // Test to see if that user exists in the database
+        if ((user.getUsername().equals(username)) && (user.getPassword().equals(password))){
+
+            modelAndView.setViewName("confirmed");
+            // Get the rest of the stuff from the database to display on the page
+
+        }
+
+
+        return modelAndView;
+    }
+
 
     // Takes and saves info from the form
     @PostMapping("/saveInfo")
@@ -188,16 +216,6 @@ public class WebsiteController {
         return returnPage;
     }
 
-    /*
-    @GetMapping("/profile")
-    public String renderProfile(){
-
-        // Fetch the image from database
-        // add object to the view
-
-        // return the view
-    }
-    */
 
 
     @GetMapping(path = "/all")
@@ -216,8 +234,8 @@ public class WebsiteController {
 
     @GetMapping(path = "/userByName")
     public @ResponseBody
-    User getOneUserByName(@RequestParam String name) {
-        return userRepo.findByName(name);
+    User getOneUserByName(@RequestParam("username") String username) {
+        return userRepo.findByUsername(username);
     }
 
 

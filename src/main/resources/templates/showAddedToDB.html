@@ -74,14 +74,16 @@
                         <p style="color: rgb(255,255,255);">Image:</p>
                     </div>
                     <div class="col text">
-                        <p style="color: rgb(255,255,255);">pic</p><img th:src="${imgSrc}" style="width: 100px;height: 100px;" /></div>
+                        <p style="color: rgb(255,255,255);"></p><img th:src="${imgSrc}" style="width: 100px;height: 100px;" /></div>
                 </div>
                 <div class="row">
                     <div class="col text">
                         <p style="color: rgb(255,255,255);">Image URL:</p>
                     </div>
                     <div class="col text">
-                        <p style="color: rgb(255,255,255);">www.pic.com</p>
+                        <a th:href="${imgSrc}">
+                            <p style="color: rgb(255,255,255);" th:text="${imgSrc}"></p>
+                        </a>
                     </div>
                 </div>
                 <div class="row">
@@ -89,7 +91,7 @@
                         <p style="color: rgb(255,255,255);">Full Name:</p>
                     </div>
                     <div class="col text">
-                        <p style="color: rgb(255,255,255);">John Smith</p>
+                        <p style="color: rgb(255,255,255);" th:text="${name}"></p>
                     </div>
                 </div>
                 <div class="row">
@@ -97,7 +99,7 @@
                         <p style="color: rgb(255,255,255);">Username:</p>
                     </div>
                     <div class="col text">
-                        <p style="color: rgb(255,255,255);">jsmithredsox</p>
+                        <p style="color: rgb(255,255,255);" th:text="${username}"></p>
                     </div>
                 </div>
                 <div class="row">
@@ -105,7 +107,7 @@
                         <p style="color: rgb(255,255,255);">Biography:</p>
                     </div>
                     <div class="col text">
-                        <p style="color: rgb(255,255,255);">thu a o o uteh tuhe th oethutaoehuoeth uthuthutu tehuthetuhetuhet  ehhe o o o o uhethue toh ute uteo tuoe tuoeu oe utoe utoeuttoe  ehto hte</p>
+                        <p style="color: rgb(255,255,255);" th:text="${bio}"></p>
                     </div>
                 </div>
             </div>
