@@ -247,6 +247,37 @@ public class WebsiteController {
 
 
 
+    @PostMapping(path = "/changeName")
+    public ModelAndView changeName(@RequestParam("username") String username, @RequestParam("newName") String newName){
+
+        ModelAndView modelAndView = getPageWithWeatherInfo();
+
+        try{
+            User updatedUser = userRepo.findByUsername(username);
+            updatedUser.setName(newName);
+            userRepo.save(updatedUser);
+            modelAndView.setViewName("profile");
+            // Get the rest of the stuff from the database to display on the page
+            modelAndView.addObject("name", updatedUser.getName());
+            modelAndView.addObject("username", updatedUser.getUsername());
+            modelAndView.addObject("imageUrl", updatedUser.getImageUrl());
+            modelAndView.addObject("bio", updatedUser.getBio());
+            modelAndView.addObject("id", updatedUser.getId());
+
+
+        } catch(Exception error){
+
+            error.printStackTrace();
+            modelAndView.setViewName("showError");
+        }
+
+        return modelAndView;
+
+    }
+
+
+
+
     public ModelAndView getPageWithWeatherInfo()
     {
         ModelAndView returnPage = new ModelAndView();
@@ -320,4 +351,6 @@ public class WebsiteController {
 
         return returnPage;
     }
+
+
 }
