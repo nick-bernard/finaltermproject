@@ -404,10 +404,6 @@ public class WebsiteController {
             int intWind_speed = (int)wind_speed;
 
 
-
-
-
-
             returnPage.addObject("temp", intTemp);
             returnPage.addObject("description", weather_description);
             returnPage.addObject("icon", weather_icon_path);
