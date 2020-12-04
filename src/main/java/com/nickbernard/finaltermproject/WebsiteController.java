@@ -62,18 +62,6 @@ public class WebsiteController {
         return modelAndView;
     }
 
-
-    @GetMapping("/about")
-    public ModelAndView renderAboutPage() {
-
-        ModelAndView modelAndView = getPageWithWeatherInfo();
-
-        modelAndView.setViewName("about");
-
-        return modelAndView;
-    }
-
-
     @GetMapping("/artworks")
     public ModelAndView renderArtworksPage() {
 
